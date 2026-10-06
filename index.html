@@ -1,0 +1,701 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Mohammad Milhem</title>
+<meta name="description" content="Mohammad Milhem — aeronautical engineering student at JUST. Aerodynamics, CFD, CAD and Formula Student.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer@3.5.0/dist/model-viewer.min.js"></script>
+<style>
+/* Layout: one-column engineering notebook. Sticky nav, hash-routed pages, title-block spec strips on every project, shared "Get in touch" footer. */
+:root{
+  /* Palette A — Hangar (graphite + amber work-light) */
+  --bg:#1d222a; --surface:#252b35; --surface-2:#2c3340; --line:#38414f;
+  --fg:#e7eaef; --muted:#9ba4b3; --accent:#f0a540; --accent-ink:#1d222a;
+  --display:"Archivo","Helvetica Neue",Arial,sans-serif;
+  --body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+  --r:6px; --max:1120px;
+  color-scheme:dark;
+}
+:root[data-palette="stratos"]{ /* Palette B — Stratos (blue slate + sky) */
+  --bg:#1a2232; --surface:#222c3f; --surface-2:#29354b; --line:#36445e;
+  --fg:#e5ebf5; --muted:#97a5bf; --accent:#72c4ff; --accent-ink:#13213a;
+}
+:root[data-palette="paddock"]{ /* Palette C — Paddock (warm carbon + racing red) */
+  --bg:#211f23; --surface:#2b282d; --surface-2:#343037; --line:#433e45;
+  --fg:#efebe7; --muted:#aaa29c; --accent:#ec5a50; --accent-ink:#211f23;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.6 var(--body);-webkit-font-smoothing:antialiased}
+a{color:var(--accent);text-underline-offset:3px}
+img{max-width:100%;display:block}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:2px}
+.wrap{max-width:var(--max);margin:0 auto;padding-inline:clamp(16px,4vw,40px)}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0;line-height:1.1}
+h1{font-size:clamp(2.6rem,7vw,4.6rem);font-weight:800;font-stretch:112%;letter-spacing:-.01em}
+h2{font-size:clamp(1.8rem,4vw,2.6rem);font-weight:750;font-stretch:108%}
+h3{font-size:1.35rem;font-weight:700;font-stretch:104%}
+p{margin:0;max-width:65ch}
+.label{font:500 .74rem/1.3 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.label.acc{color:var(--accent)}
+.muted{color:var(--muted)}
+
+/* Nav */
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.nav .wrap{display:flex;align-items:center;gap:20px;height:60px}
+.brand{font:800 1rem/1 var(--display);font-stretch:118%;letter-spacing:.04em;color:var(--fg);text-decoration:none;white-space:nowrap}
+.brand span{color:var(--accent)}
+.links{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;flex:1;min-width:0}
+.links::-webkit-scrollbar{display:none}
+.links a{color:var(--muted);text-decoration:none;font-size:.92rem;padding:8px 10px;border-radius:var(--r);white-space:nowrap}
+.links a:hover{color:var(--fg)}
+.links a[aria-current="page"]{color:var(--fg);background:var(--surface)}
+.palette{display:flex;align-items:center;gap:6px}
+.palette button{width:18px;height:18px;border-radius:50%;border:2px solid var(--line);cursor:pointer;padding:0}
+.palette button[aria-pressed="true"]{border-color:var(--fg)}
+@media (max-width:720px){.nav .wrap{flex-wrap:wrap;height:auto;padding-block:10px;gap:8px}.links{order:3;flex-basis:100%}}
+
+/* Pages */
+main{padding-block:56px 24px}
+.page{display:none;flex-direction:column;gap:72px}
+.page.on{display:flex;animation:fade .35s ease}
+@keyframes fade{from{opacity:.4;transform:translateY(6px)}to{opacity:1;transform:none}}
+.sec-head{display:flex;flex-direction:column;gap:12px;margin-bottom:28px}
+
+/* Buttons */
+.btns{display:flex;flex-wrap:wrap;gap:12px}
+.btn{display:inline-flex;align-items:center;gap:8px;font:600 .95rem/1 var(--body);padding:13px 18px;border-radius:var(--r);text-decoration:none;border:1px solid var(--line);color:var(--fg);background:transparent;cursor:pointer}
+.btn:hover{border-color:var(--muted)}
+.btn.pri{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.btn.pri:hover{filter:brightness(1.08)}
+
+/* Hero */
+.hero{display:grid;grid-template-columns:1.05fr 1fr;gap:48px;align-items:center}
+.hero-copy{display:flex;flex-direction:column;gap:22px;min-width:0}
+.hero-copy p{font-size:1.12rem;color:var(--muted)}
+.foil{border:1px solid var(--line);border-radius:var(--r);background:var(--surface);padding:18px 18px 12px}
+.foil svg{width:100%;height:auto;display:block}
+.foil .cap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:8px}
+@media (max-width:860px){.hero{grid-template-columns:1fr}}
+
+/* Cards */
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+@media (max-width:900px){.grid3{grid-template-columns:1fr}}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;display:flex;flex-direction:column;text-decoration:none;color:var(--fg);transition:border-color .2s,transform .2s}
+.card:hover{border-color:var(--accent);transform:translateY(-2px)}
+.card .img{aspect-ratio:16/9;background:#e9ecef;display:grid;place-items:center;overflow:hidden}
+.card .img img{width:100%;height:100%;object-fit:contain}
+.card .img.dark{background:var(--surface-2)}
+.card .body{padding:18px 20px 20px;display:flex;flex-direction:column;gap:8px;flex:1}
+.card .body p{color:var(--muted);font-size:.95rem}
+
+/* Case study */
+.case{display:flex;flex-direction:column;gap:22px;padding-top:40px;border-top:1px solid var(--line);scroll-margin-top:90px}
+.case:first-of-type{border-top:0;padding-top:0}
+.case-head{display:flex;flex-direction:column;gap:10px}
+.oneline{font-size:1.1rem}
+.spec{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.spec div{padding:10px 14px;border-right:1px solid var(--line);display:flex;flex-direction:column;gap:3px;min-width:0}
+.spec div:last-child{border-right:0}
+.spec b{font:500 .95rem/1.35 var(--mono);font-variant-numeric:tabular-nums;color:var(--fg);overflow-wrap:anywhere}
+@media (max-width:720px){.spec{grid-template-columns:1fr 1fr}.spec div:nth-child(2){border-right:0}.spec div:nth-child(-n+2){border-bottom:1px solid var(--line)}}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+@media (max-width:860px){.cols{grid-template-columns:1fr}}
+.cols>*{min-width:0}
+.prose{display:flex;flex-direction:column;gap:14px;color:var(--fg)}
+.prose h4{font:500 .74rem/1.3 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin:8px 0 0}
+.prose ul{margin:0;padding-left:1.1em;display:flex;flex-direction:column;gap:6px;max-width:65ch}
+.prose li::marker{color:var(--accent)}
+figure{margin:0;display:flex;flex-direction:column;gap:8px}
+figure img{border-radius:var(--r);border:1px solid var(--line);background:#fff;width:100%}
+figcaption{font:.8rem/1.4 var(--mono);color:var(--muted)}
+.gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+@media (max-width:720px){.gallery{grid-template-columns:1fr 1fr}}
+.gallery img{aspect-ratio:1/1;object-fit:contain;background:#eef0f2}
+model-viewer{display:block;width:100%;height:clamp(320px,52vw,520px);background:radial-gradient(ellipse at 50% 60%,var(--surface-2),var(--surface));border:1px solid var(--line);border-radius:var(--r);--poster-color:transparent}
+.viewer-note{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.placeholder{border:1px dashed var(--line);border-radius:var(--r);background:repeating-linear-gradient(135deg,transparent 0 12px,color-mix(in srgb,var(--line) 35%,transparent) 12px 13px);display:grid;place-items:center;text-align:center;padding:24px;color:var(--muted);font:.85rem/1.5 var(--mono);min-height:180px}
+.pill{display:inline-flex;align-items:center;gap:6px;font:500 .72rem/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;padding:6px 9px;border-radius:99px;border:1px solid var(--line);color:var(--muted);width:fit-content}
+.pill.live::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--accent)}
+.toc{display:flex;flex-wrap:wrap;gap:8px}
+.toc a{font-size:.9rem;padding:8px 12px;border:1px solid var(--line);border-radius:99px;color:var(--fg);text-decoration:none}
+.toc a:hover{border-color:var(--accent)}
+
+/* About */
+.about{display:grid;grid-template-columns:300px 1fr;gap:48px;align-items:start}
+@media (max-width:800px){.about{grid-template-columns:1fr}.about .portrait{max-width:280px}}
+.portrait img{border-radius:var(--r);border:1px solid var(--line);aspect-ratio:555/630;object-fit:cover;width:100%}
+.timeline{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.timeline li{display:grid;grid-template-columns:130px 1fr;gap:20px;padding:16px 0;border-top:1px solid var(--line)}
+.timeline li:last-child{border-bottom:1px solid var(--line)}
+.timeline .when{font:500 .85rem/1.5 var(--mono);color:var(--accent);font-variant-numeric:tabular-nums}
+.timeline p{color:var(--muted);font-size:.95rem}
+@media (max-width:560px){.timeline li{grid-template-columns:1fr;gap:4px}}
+
+/* Skills */
+.skills{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+@media (max-width:760px){.skills{grid-template-columns:1fr}}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:22px}
+.panel h3{margin-bottom:14px}
+.sk{list-style:none;margin:0;padding:0}
+.sk li{display:flex;justify-content:space-between;gap:16px;padding:10px 0;border-top:1px solid var(--line)}
+.sk li:first-child{border-top:0}
+.lvl{font:500 .75rem/1.6 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
+.lvl.adv{color:var(--accent)}
+.cert{display:grid;grid-template-columns:1fr 1.1fr;gap:28px;align-items:center}
+@media (max-width:800px){.cert{grid-template-columns:1fr}}
+.cert img{border-radius:var(--r);border:1px solid var(--line)}
+.awards{display:flex;flex-direction:column}
+.awards div{display:flex;justify-content:space-between;gap:16px;padding:14px 0;border-top:1px solid var(--line);flex-wrap:wrap}
+
+/* Formula */
+.parts{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+@media (max-width:820px){.parts{grid-template-columns:1fr 1fr}}
+.part{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px;display:flex;flex-direction:column;gap:6px}
+.part p{color:var(--muted);font-size:.9rem}
+.facts{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+@media (max-width:720px){.facts{grid-template-columns:1fr}}
+
+/* Contact + footer */
+.contact-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+@media (max-width:820px){.contact-grid{grid-template-columns:1fr}}
+.contact-grid .panel{display:flex;flex-direction:column;gap:8px;min-width:0}
+.contact-grid .val{font:500 1rem/1.4 var(--mono);overflow-wrap:anywhere}
+.copy{align-self:flex-start;font:500 .78rem/1 var(--mono);background:none;border:1px solid var(--line);color:var(--muted);padding:7px 10px;border-radius:var(--r);cursor:pointer}
+.copy:hover{color:var(--fg);border-color:var(--muted)}
+footer{border-top:1px solid var(--line);margin-top:72px;background:var(--surface)}
+footer .wrap{padding-block:56px 32px;display:grid;grid-template-columns:1fr 1.3fr;gap:48px}
+@media (max-width:860px){footer .wrap{grid-template-columns:1fr}}
+footer .intro{display:flex;flex-direction:column;gap:14px}
+form{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+form .full{grid-column:1/-1}
+@media (max-width:560px){form{grid-template-columns:1fr}}
+.field{display:flex;flex-direction:column;gap:6px;min-width:0}
+.field label{font:500 .74rem/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+input,textarea{font:inherit;color:var(--fg);background:var(--bg);border:1px solid var(--line);border-radius:var(--r);padding:12px 13px;width:100%}
+textarea{min-height:130px;resize:vertical}
+input:focus,textarea:focus{outline:none;border-color:var(--accent)}
+.status{font:.88rem/1.5 var(--mono);color:var(--muted);min-height:1.5em}
+.status.ok{color:var(--accent)}
+.base{grid-column:1/-1;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;padding-top:24px;border-top:1px solid var(--line)}
+.base a{color:var(--muted)}
+.code{margin:0;background:var(--bg);border:1px solid var(--line);border-radius:var(--r);padding:16px;overflow-x:auto;font:.8rem/1.6 var(--mono);color:var(--fg);max-width:100%}
+.code .c{color:var(--muted)}
+</style>
+</head>
+<body>
+
+<nav class="nav" aria-label="Main">
+  <div class="wrap">
+    <a class="brand" href="#home">M<span>.</span>MILHEM</a>
+    <div class="links">
+      <a href="#about">About</a>
+      <a href="#projects">Projects</a>
+      <a href="#formula">Formula Student</a>
+      <a href="#skills">Skills &amp; Certifications</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <div class="palette" role="group" aria-label="Colour theme">
+      <span class="label" id="pal-name">Hangar</span>
+      <button data-p="hangar" title="Hangar" aria-label="Hangar theme" style="background:#f0a540"></button>
+      <button data-p="stratos" title="Stratos" aria-label="Stratos theme" style="background:#72c4ff"></button>
+      <button data-p="paddock" title="Paddock" aria-label="Paddock theme" style="background:#ec5a50"></button>
+    </div>
+  </div>
+</nav>
+
+<main class="wrap">
+
+<!-- ============ HOME ============ -->
+<section class="page" data-page="home">
+  <div class="hero">
+    <div class="hero-copy">
+      <span class="label acc">Aeronautical Engineering · JUST</span>
+      <h1>Mohammad Milhem</h1>
+      <p>Aeronautical engineering student driven by aerodynamics. I pair simulation and CAD with hands-on testing, aiming for a career in aerospace R&amp;D or Formula One aerodynamics.</p>
+      <div class="btns">
+        <a class="btn pri" href="#projects">View projects</a>
+        <a class="btn" href="assets/Mohammad_Milhem_Resume.pdf" target="_blank" rel="noopener">Résumé (PDF)</a>
+      </div>
+    </div>
+    <div class="foil">
+      <svg id="foil" viewBox="-0.06 -0.2 1.12 0.36" role="img" aria-label="NACA 2412 airfoil profile with camber line"></svg>
+      <div class="cap">
+        <span class="label">NACA 2412</span>
+        <span class="label">m = 2% · p = 0.4c · t = 12%</span>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <div class="sec-head">
+      <span class="label">Selected work</span>
+      <h2>Projects</h2>
+    </div>
+    <div class="grid3">
+      <a class="card" href="#projects" data-jump="p-747">
+        <div class="img"><img src="assets/747-climb.jpg" alt="Rendered Boeing 747-8 CAD model in climb"></div>
+        <div class="body"><span class="label acc">CAD · Creo Parametric</span><h3>Boeing 747-8 full-aircraft model</h3><p>A complete 747-8 built from scaled blueprints in three weeks. Rotate it in 3D.</p></div>
+      </a>
+      <a class="card" href="#projects" data-jump="p-naca">
+        <div class="img"><img src="assets/naca-cfd.jpg" alt="Deformation contour on a NACA 2412 wing"></div>
+        <div class="body"><span class="label acc">CFD + FEA · ANSYS</span><h3>NACA 2412 wing: lift to deflection</h3><p>Fluent pressure loads mapped onto a structural model of an aluminium wing.</p></div>
+      </a>
+      <a class="card" href="#formula">
+        <div class="img dark"><div class="placeholder" style="border:0;min-height:0;width:100%;height:100%">Team photo<br>coming soon</div></div>
+        <div class="body"><span class="label acc">Leadership · Aerodynamics</span><h3>JUST Formula Student</h3><p>Team lead and head of aerodynamics for the Formula Student UK Concept Class.</p></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ABOUT ============ -->
+<section class="page" data-page="about">
+  <div class="about">
+    <div class="portrait"><img src="assets/portrait.jpg" alt="Portrait of Mohammad Milhem"></div>
+    <div style="display:flex;flex-direction:column;gap:22px;min-width:0">
+      <span class="label acc">About</span>
+      <h2>Building, testing, and checking the theory</h2>
+      <div class="prose">
+        <p>I'm Mohammad, an aeronautical engineering student at Jordan University of Science and Technology. I'm drawn to aerodynamics: understanding how air moves around a body, and how to shape that body to make it faster, more efficient, or more stable.</p>
+        <p>I learn best by building, so I pair simulation and CAD with hands-on testing to see whether the theory holds up in the real world. I currently lead my university's Formula Student team and its Aerodynamics Department, alongside my own independent projects.</p>
+        <p>My goal is to work in aerospace R&amp;D or Formula One aerodynamics, where design, analysis, and testing all meet.</p>
+      </div>
+      <div class="btns">
+        <a class="btn pri" href="assets/Mohammad_Milhem_Resume.pdf" target="_blank" rel="noopener">Download résumé</a>
+        <a class="btn" href="https://www.linkedin.com/in/mohammad-melhem-450557312/" target="_blank" rel="noopener">LinkedIn</a>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <div class="sec-head"><span class="label">Path so far</span><h2>Timeline</h2></div>
+    <ol class="timeline">
+      <li><span class="when">2024</span><div><h3>Queen Rania Outstanding UK Learner Award</h3><p>Recognised after completing high school.</p></div></li>
+      <li><span class="when">Oct 2024</span><div><h3>B.Sc. Aeronautical Engineering, JUST</h3><p>4.0 / 4.0 GPA. Faculty Honor List four semesters in a row. Expected graduation June 2029.</p></div></li>
+      <li><span class="when">Dec 2025</span><div><h3>C-130 analysis &amp; standard atmosphere model</h3><p>41-page team report and a MATLAB atmosphere model to 105 km.</p></div></li>
+      <li><span class="when">May 2026</span><div><h3>Boeing 747-8 CAD model</h3><p>Full-aircraft assembly in Creo Parametric for AE204 Solid Modeling.</p></div></li>
+      <li><span class="when">Aug 2026</span><div><h3>ANSYS Workbench certification · NACA 2412 study</h3><p>45 hours of Fluent and Mechanical training, applied straight away to a coupled CFD–FEA wing study.</p></div></li>
+      <li><span class="when">Aug 2026</span><div><h3>Team Lead &amp; Head of Aerodynamics, JUST Formula Student</h3><p>Leading a 15-member team toward the Formula Student UK Concept Class.</p></div></li>
+    </ol>
+  </div>
+</section>
+
+<!-- ============ PROJECTS ============ -->
+<section class="page" data-page="projects">
+  <div class="sec-head">
+    <span class="label acc">Projects &amp; research</span>
+    <h2>Work, with the process behind it</h2>
+    <p class="muted">Each project starts with the problem, my role and the result, then walks through how I got there.</p>
+    <nav class="toc" aria-label="Projects on this page">
+      <a href="#projects" data-jump="p-747">Boeing 747-8 CAD</a>
+      <a href="#projects" data-jump="p-naca">NACA 2412 CFD &amp; FEA</a>
+      <a href="#projects" data-jump="p-rig">Force measurement rig</a>
+      <a href="#projects" data-jump="p-c130">C-130 &amp; standard atmosphere</a>
+      <a href="#formula">Formula Student →</a>
+    </nav>
+  </div>
+
+  <!-- 747 -->
+  <article class="case" id="p-747">
+    <div class="case-head">
+      <span class="label acc">CAD · Course project</span>
+      <h2>Boeing 747-8 full-aircraft model</h2>
+      <p class="oneline">Recreated a complete 747-8 in Creo Parametric from public blueprints, working alone, in three weeks.</p>
+    </div>
+    <div class="spec">
+      <div><span class="label">Course</span><b>AE204 Solid Modeling</b></div>
+      <div><span class="label">Tool</span><b>Creo Parametric</b></div>
+      <div><span class="label">Duration</span><b>29 Apr – 19 May 2026</b></div>
+      <div><span class="label">Scope</span><b>Full assembly, 1:1</b></div>
+    </div>
+    <model-viewer id="mv747" poster="assets/747-side.jpg" alt="Interactive 3D model of the Boeing 747-8" camera-controls auto-rotate auto-rotate-delay="1500" rotation-per-second="12deg" shadow-intensity="0.6" exposure="1.05" camera-orbit="35deg 72deg 62%" field-of-view="26deg" loading="lazy" touch-action="pan-y"></model-viewer>
+    <div class="viewer-note"><span class="label">Drag to rotate · scroll or pinch to zoom</span><span class="label">Exported from Creo as STEP</span></div>
+    <div class="cols">
+      <div class="prose">
+        <h4>Approach</h4>
+        <p>I picked the 747-8 for its difficulty: wing-body transitions, engine integration and a large assembly. I planned the work on a Gantt chart, then broke the aircraft into fuselage, wings, tail, engines and landing gear, each as its own part.</p>
+        <h4>Key decisions</h4>
+        <ul>
+          <li>Built the fuselage from scaled blueprint cross-sections joined with boundary blends.</li>
+          <li>Boeing doesn't publish the 747-8's airfoils. My first two-section wing came out boxy, so I rebuilt it from three airfoil sections.</li>
+          <li>Used the Project tool to transfer an extruded outline onto the next section plane when the vertex counts didn't match.</li>
+          <li>Modeled the GEnx fan as one blade patterned 18 times at 20°.</li>
+          <li>Added windows and doors by projecting sketches onto the fuselage surface and offsetting them, techniques I learned beyond the course.</li>
+        </ul>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:14px;min-width:0">
+        <figure><img src="assets/747-side.jpg" alt="Side view render of the 747-8 model"><figcaption>Final assembly, side view</figcaption></figure>
+        <figure><img src="assets/747-front.jpg" alt="Front view render of the 747-8 model"><figcaption>Front view: raked wingtips and four GEnx nacelles</figcaption></figure>
+      </div>
+    </div>
+    <div class="gallery">
+      <figure><img src="assets/747-engine-front.jpg" alt="Engine model, front view showing fan"><figcaption>GEnx fan, 18 blades</figcaption></figure>
+      <figure><img src="assets/747-fan.jpg" alt="Engine internals: fan stages and spinner"><figcaption>Fan stages and spinner</figcaption></figure>
+      <figure><img src="assets/747-engine-rear.jpg" alt="Engine model, rear view with chevron nozzle"><figcaption>Chevron nozzle and exhaust cone</figcaption></figure>
+    </div>
+  </article>
+
+  <!-- NACA -->
+  <article class="case" id="p-naca">
+    <div class="case-head">
+      <span class="label acc">CFD + FEA · Independent</span>
+      <h2>NACA 2412 wing: from lift to deflection</h2>
+      <p class="oneline">Coupled ANSYS Fluent and ANSYS Mechanical to find how far aerodynamic lift bends an aluminium wing.</p>
+    </div>
+    <div class="spec">
+      <div><span class="label">Airspeed</span><b>30 m/s</b></div>
+      <div><span class="label">Lift (half-span)</span><b>88.1 N</b></div>
+      <div><span class="label">Max tip deflection</span><b>0.117 mm</b></div>
+      <div><span class="label">Material</span><b>Al 6061-T6</b></div>
+    </div>
+    <figure><img src="assets/naca-fea.jpg" alt="Total deformation contour on the wing in ANSYS Mechanical"><figcaption>Total deformation under the mapped CFD pressure load</figcaption></figure>
+    <div class="cols">
+      <div class="prose">
+        <h4>Method</h4>
+        <ul>
+          <li>Built a half-span domain with a symmetry plane, which halves the cell count without losing accuracy.</li>
+          <li>Refined the mesh locally around the wing and ran a steady SST k-ω simulation at 30 m/s.</li>
+          <li>Linked Fluent to Static Structural in Workbench and imported the surface pressure as a distributed load, with the root fixed.</li>
+        </ul>
+        <h4>Result</h4>
+        <p>The wing produced 88.1 N of lift and deflected 0.117 mm at the tip. That's tiny, as you'd expect for a solid aluminium section at this speed, and it confirms that the one-way coupled workflow runs end to end.</p>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:14px;min-width:0">
+        <figure><img src="assets/naca-mesh.jpg" alt="CFD mesh with local refinement around the wing"><figcaption>Fluid domain mesh with a local refinement zone</figcaption></figure>
+        <figure><img src="assets/naca-workflow.jpg" alt="ANSYS Workbench project schematic linking Fluent to Static Structural"><figcaption>Workbench schematic: Fluent → Static Structural</figcaption></figure>
+      </div>
+    </div>
+  </article>
+
+  <!-- Rig -->
+  <article class="case" id="p-rig">
+    <div class="case-head">
+      <span class="pill live">In progress</span>
+      <h2>Aerodynamic force measurement rig</h2>
+      <p class="oneline">A lift and drag balance for testing small models, built so I can check CFD predictions against real measurements.</p>
+    </div>
+    <div class="spec">
+      <div><span class="label">Started</span><b>July 2026</b></div>
+      <div><span class="label">Forces</span><b>Lift + drag, load cells</b></div>
+      <div><span class="label">Airspeed</span><b>MPXV7002DP Δp sensor</b></div>
+      <div><span class="label">Controller</span><b>Arduino Uno + display</b></div>
+    </div>
+    <div class="cols">
+      <div class="prose">
+        <h4>The idea</h4>
+        <p>Version 1 measures lift and drag on a model with load cells, and airspeed with a differential pressure sensor. An Arduino Uno reads the sensors and shows live values on a display.</p>
+        <h4>Next</h4>
+        <ul>
+          <li>Run the same CAD models in ANSYS Fluent.</li>
+          <li>Compare measured forces against the CFD predictions.</li>
+          <li>Use the differences to design version 2.</li>
+        </ul>
+      </div>
+      <div class="placeholder">Rig CAD, wiring and test photos<br>will go here</div>
+    </div>
+  </article>
+
+  <!-- C-130 -->
+  <article class="case" id="p-c130">
+    <div class="case-head">
+      <span class="label acc">Research · AE201 team project</span>
+      <h2>C-130 Hercules analysis &amp; standard atmosphere model</h2>
+      <p class="oneline">A technical report on the C-130, plus a MATLAB model of the 1976 U.S. Standard Atmosphere.</p>
+    </div>
+    <div class="spec">
+      <div><span class="label">Report</span><b>41 pages</b></div>
+      <div><span class="label">Model range</span><b>0 – 105 km</b></div>
+      <div><span class="label">Check at 20 km</span><b>within 1%</b></div>
+      <div><span class="label">Dates</span><b>Dec 2025 – Jan 2026</b></div>
+    </div>
+    <div class="cols">
+      <div class="prose">
+        <h4>Report</h4>
+        <p>We covered the C-130's design, structures, propulsion, performance and cost. I led the sections on its history, evolution and modernization.</p>
+        <h4>MATLAB model</h4>
+        <ul>
+          <li>Takes any altitude up to 105 km and returns temperature, pressure, density and speed of sound, with plots and Excel export.</li>
+          <li>I stored every layer's constants in one matrix and computed each layer's base temperature and pressure in a loop, instead of hard-coding them. Each altitude band then just picks its column.</li>
+          <li>At 20 km it gives 216.66 K and 0.0880 kg/m³, matching the standard table. Pressure is within 1%.</li>
+        </ul>
+        <h4>The core of the model</h4>
+        <pre class="code"><code><span class="c">% Layer bases (m) and lapse rates (K/m), 1976 U.S. Standard Atmosphere</span>
+h_base     = [0, 11000, 25000, 47000, 53000, 79000, 90000, 105000];
+lapse_rate = [-0.0065, 0, 0.003, 0, -0.0045, 0, 0.004, 0];
+
+<span class="c">% Base temperature and pressure of each layer, built up from sea level</span>
+for i = 2:8
+    T_base(i) = T_base(i-1) + lapse_rate(i-1)*(h_base(i)-h_base(i-1));
+    a = lapse_rate(i-1);
+    if a ~= 0   <span class="c">% gradient layer</span>
+        P_base(i) = P_base(i-1) * (T_base(i)/T_base(i-1))^(-g0/(a*R));
+    else        <span class="c">% isothermal layer</span>
+        P_base(i) = P_base(i-1) * exp(-g0*(h_base(i)-h_base(i-1))/(R*T_base(i-1)));
+    end
+end
+
+LayerData = [h_base; T_base; P_base; lapse_rate];   <span class="c">% one column per layer</span></code></pre>
+        <div class="btns"><a class="btn" href="assets/standard_atmosphere.m" target="_blank" rel="noopener">View full MATLAB code</a></div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:14px;min-width:0">
+        <figure><img src="assets/atm-temperature.jpg" alt="MATLAB plot of temperature against altitude"><figcaption>Temperature vs altitude, 0–100 km</figcaption></figure>
+        <figure><img src="assets/atm-density.jpg" alt="MATLAB plot of density against altitude on a log scale"><figcaption>Density vs altitude (log scale)</figcaption></figure>
+      </div>
+    </div>
+  </article>
+</section>
+
+<!-- ============ FORMULA ============ -->
+<section class="page" data-page="formula">
+  <div class="hero" style="align-items:start">
+    <div class="hero-copy">
+      <span class="label acc">Formula Student UK · Concept Class</span>
+      <h2 style="font-size:clamp(2.2rem,5vw,3.4rem)">JUST Formula Student Team</h2>
+      <p>Working name <strong style="color:var(--fg)">BARQ Racing</strong>. I lead the team and head its Aerodynamics Department.</p>
+    </div>
+    <div class="placeholder" style="min-height:240px">Team logo / photo<br>coming soon</div>
+  </div>
+
+  <div class="facts">
+    <div class="panel"><span class="label">Role</span><h3 style="margin-top:8px">Team Lead &amp; Head of Aerodynamics</h3></div>
+    <div class="panel"><span class="label">Team</span><h3 style="margin-top:8px">15 members · 3 in aero</h3></div>
+    <div class="panel"><span class="label">Since</span><h3 style="margin-top:8px">August 2026</h3></div>
+  </div>
+
+  <div>
+    <div class="sec-head"><span class="label">Leading the team</span><h2>How I run it</h2></div>
+    <div class="cols">
+      <div class="prose">
+        <p>Before any design work began, I set up the team's operating infrastructure: the documents, workflows and standards everyone works from. The goal is simple. Every sub-team moves at the same pace, knows what's due, and works to the same standard.</p>
+        <ul>
+          <li>Shared documentation structure for every department.</li>
+          <li>Defined workflows for how work moves from idea to review to done.</li>
+          <li>Common standards so outputs from different sub-teams fit together.</li>
+        </ul>
+      </div>
+      <div class="placeholder">Workflow diagram or documentation screenshot<br>will go here</div>
+    </div>
+  </div>
+
+  <div>
+    <div class="sec-head"><span class="label">Aerodynamics Department</span><h2>The aero package</h2><p class="muted">Development this season covers four components.</p></div>
+    <div class="parts">
+      <div class="part"><span class="label acc">01 · Front</span><h3>Front wing</h3><p>First surface to meet the air; sets up flow for the rest of the car.</p></div>
+      <div class="part"><span class="label acc">02 · Rear</span><h3>Rear wing</h3><p>Main source of downforce at the back of the car.</p></div>
+      <div class="part"><span class="label acc">03 · Floor</span><h3>Undertray</h3><p>Uses the car's underside to generate downforce.</p></div>
+      <div class="part"><span class="label acc">04 · Exit</span><h3>Diffuser</h3><p>Recovers pressure as air leaves the floor.</p></div>
+    </div>
+  </div>
+
+  <div class="placeholder" style="min-height:220px">CFD results and CAD renders of the aero parts<br>will be added as the season progresses</div>
+</section>
+
+<!-- ============ SKILLS ============ -->
+<section class="page" data-page="skills">
+  <div class="sec-head"><span class="label acc">Skills &amp; certifications</span><h2>Tools I use, and how well</h2></div>
+  <div class="skills">
+    <div class="panel">
+      <h3>Software</h3>
+      <ul class="sk">
+        <li><span>Creo Parametric</span><span class="lvl adv">Advanced</span></li>
+        <li><span>ANSYS Fluent</span><span class="lvl">Intermediate</span></li>
+        <li><span>ANSYS Mechanical</span><span class="lvl">Intermediate</span></li>
+        <li><span>MATLAB</span><span class="lvl">Intermediate</span></li>
+        <li><span>Microsoft Excel</span><span class="lvl">Intermediate</span></li>
+      </ul>
+    </div>
+    <div class="panel">
+      <h3>Engineering</h3>
+      <ul class="sk">
+        <li><span>Surface &amp; assembly modeling</span><span class="lvl adv">Advanced</span></li>
+        <li><span>CFD (external aerodynamics)</span><span class="lvl">Intermediate</span></li>
+        <li><span>FEA &amp; fluid–structure coupling</span><span class="lvl">Intermediate</span></li>
+        <li><span>Meshing</span><span class="lvl">Intermediate</span></li>
+        <li><span>Arduino, load cells &amp; data acquisition</span><span class="lvl">Beginner</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div>
+    <div class="sec-head"><span class="label">Certification</span><h2>ANSYS Workbench</h2></div>
+    <div class="cert">
+      <img src="assets/cert-ansys.jpg" alt="MechXpert certificate of completion for ANSYS Workbench training">
+      <div class="prose">
+        <p><strong>45 hours of training on ANSYS Fluent and ANSYS Mechanical</strong>, covering fundamentals through advanced applications.</p>
+        <div class="spec" style="grid-template-columns:1fr 1fr">
+          <div><span class="label">Issued by</span><b>MechXpert</b></div>
+          <div><span class="label">Completed</span><b>10 Aug 2026</b></div>
+        </div>
+        <p class="muted">I applied it straight away in the <a href="#projects" data-jump="p-naca">NACA 2412 wing study</a>.</p>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <div class="sec-head"><span class="label">Recognition</span><h2>Honors &amp; awards</h2></div>
+    <div class="awards">
+      <div><span><strong>Faculty Honor List</strong>, Jordan University of Science and Technology · 4 consecutive semesters</span><span class="label">Fall 2024 – Spring 2026</span></div>
+      <div><span><strong>Queen Rania Outstanding UK Learner Award</strong></span><span class="label">2024</span></div>
+      <div><span><strong>GPA 4.0 / 4.0</strong>, B.Sc. Aeronautical Engineering</span><span class="label">Current</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section class="page" data-page="contact">
+  <div class="sec-head">
+    <span class="label acc">Contact</span>
+    <h2>Let's talk aerodynamics</h2>
+    <p class="muted">I'm open to internships, research opportunities and conversations with anyone working in aerospace or motorsport. The quickest way to reach me is the form at the bottom of this page.</p>
+  </div>
+  <div class="contact-grid">
+    <div class="panel"><span class="label">Email</span><span class="val" id="email-val">melhem.m.2006@gmail.com</span><button class="copy" type="button" data-copy="melhem.m.2006@gmail.com">Copy</button></div>
+    <div class="panel"><span class="label">LinkedIn</span><span class="val">mohammad-melhem</span><a class="copy" style="text-decoration:none" href="https://www.linkedin.com/in/mohammad-melhem-450557312/" target="_blank" rel="noopener">Open profile ↗</a></div>
+    <div class="panel"><span class="label">Based in</span><span class="val">Amman, Jordan</span><span class="muted" style="font-size:.9rem">Studying at JUST, Irbid</span></div>
+  </div>
+</section>
+
+</main>
+
+<footer id="get-in-touch">
+  <div class="wrap">
+    <div class="intro">
+      <span class="label acc">Get in touch</span>
+      <h2>Send me a message</h2>
+      <p class="muted">Questions about a project, an opportunity, or the Formula Student team: I'll reply by email.</p>
+      <div class="btns"><button class="copy" type="button" data-copy="melhem.m.2006@gmail.com">Copy email address</button></div>
+    </div>
+    <form id="contact-form" novalidate>
+      <div class="field"><label for="f-name">Name</label><input id="f-name" name="name" autocomplete="name" required></div>
+      <div class="field"><label for="f-email">Email</label><input id="f-email" name="email" type="email" autocomplete="email" required></div>
+      <div class="field full"><label for="f-subject">Subject</label><input id="f-subject" name="subject"></div>
+      <div class="field full"><label for="f-msg">Message</label><textarea id="f-msg" name="message" required></textarea></div>
+      <div class="full" style="display:flex;align-items:center;gap:16px;flex-wrap:wrap">
+        <button class="btn pri" type="submit">Send message</button>
+        <span class="status" id="f-status" role="status"></span>
+      </div>
+    </form>
+    <div class="base">
+      <span class="label">© <span id="yr">2026</span> Mohammad Milhem</span>
+      <span class="label"><a href="https://www.linkedin.com/in/mohammad-melhem-450557312/" target="_blank" rel="noopener">LinkedIn</a> · <a href="assets/Mohammad_Milhem_Resume.pdf" target="_blank" rel="noopener">Résumé</a></span>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ---------- Contact form ----------
+   Get a free access key at https://web3forms.com (enter melhem.m.2006@gmail.com),
+   then paste it below. Until then, the form shows the email address instead. */
+const WEB3FORMS_KEY = "YOUR_ACCESS_KEY_HERE";
+
+/* ---------- Routing ---------- */
+const pages = [...document.querySelectorAll('.page')];
+const navLinks = [...document.querySelectorAll('.links a')];
+function show(name, jump){
+  if(!pages.some(p=>p.dataset.page===name)) name='home';
+  pages.forEach(p=>p.classList.toggle('on',p.dataset.page===name));
+  navLinks.forEach(a=>{ if(a.getAttribute('href')==='#'+name) a.setAttribute('aria-current','page'); else a.removeAttribute('aria-current'); });
+  if(jump){ requestAnimationFrame(()=>document.getElementById(jump)?.scrollIntoView({behavior:'smooth',block:'start'})); }
+  else window.scrollTo({top:0});
+}
+let pendingJump=null;
+document.addEventListener('click',e=>{
+  const a=e.target.closest('a[data-jump]'); if(!a) return;
+  const target=a.getAttribute('href').slice(1);
+  if(location.hash==='#'+target){ e.preventDefault(); show(target,a.dataset.jump); }
+  else pendingJump=a.dataset.jump;
+});
+window.addEventListener('hashchange',()=>{ show(location.hash.slice(1),pendingJump); pendingJump=null; });
+show(location.hash.slice(1));
+
+/* ---------- Palette switcher ---------- */
+const names={hangar:'Hangar',stratos:'Stratos',paddock:'Paddock'};
+function setPal(p){
+  if(p==='hangar') document.documentElement.removeAttribute('data-palette'); else document.documentElement.dataset.palette=p;
+  document.querySelectorAll('.palette button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.p===p));
+  document.getElementById('pal-name').textContent=names[p];
+  try{localStorage.setItem('palette',p)}catch(e){}
+}
+document.querySelectorAll('.palette button').forEach(b=>b.addEventListener('click',()=>setPal(b.dataset.p)));
+let saved='hangar'; try{saved=localStorage.getItem('palette')||'hangar'}catch(e){}
+setPal(names[saved]?saved:'hangar');
+
+/* ---------- NACA 2412 drawn from the 4-digit equations ---------- */
+(function(){
+  const m=0.02,p=0.4,t=0.12,N=120,up=[],lo=[],cam=[];
+  for(let i=0;i<=N;i++){
+    const x=(1-Math.cos(Math.PI*i/N))/2;
+    const yt=5*t*(0.2969*Math.sqrt(x)-0.1260*x-0.3516*x*x+0.2843*x**3-0.1036*x**4);
+    const yc=x<p? m/p/p*(2*p*x-x*x) : m/(1-p)**2*((1-2*p)+2*p*x-x*x);
+    const dy=x<p? 2*m/p/p*(p-x) : 2*m/(1-p)**2*(p-x), th=Math.atan(dy);
+    up.push([x-yt*Math.sin(th),-(yc+yt*Math.cos(th))]); lo.push([x+yt*Math.sin(th),-(yc-yt*Math.cos(th))]); cam.push([x,-yc]);
+  }
+  const f=v=>v.toFixed(4), path=pts=>pts.map((q,i)=>(i?'L':'M')+f(q[0])+' '+f(q[1])).join('');
+  const shape=path(up)+path(lo.slice().reverse()).replace('M','L')+'Z';
+  let flow='';
+  for(const k of [-0.15,-0.105,-0.065,0.06,0.1,0.14]){
+    let d='';
+    for(let i=0;i<=40;i++){ const x=-0.05+i*1.1/40; const bump=0.03*Math.exp(-(((x-0.3)/0.3)**2))*(k<0?1:0.5)*(0.22/(Math.abs(k)+0.07)); d+=(i?'L':'M')+f(x)+' '+f(k-(k<0?bump:-bump*0.4)); }
+    flow+=`<path d="${d}" fill="none" stroke="var(--line)" stroke-width="0.0035"/>`;
+  }
+  document.getElementById('foil').innerHTML = flow +
+    `<line x1="0" y1="0" x2="1" y2="0" stroke="var(--muted)" stroke-width="0.002" stroke-dasharray="0.012 0.008"/>`+
+    `<path d="${shape}" fill="color-mix(in srgb, var(--accent) 16%, var(--surface))" stroke="var(--accent)" stroke-width="0.004"/>`+
+    `<path d="${path(cam)}" fill="none" stroke="var(--fg)" stroke-width="0.0025" stroke-dasharray="0.006 0.006"/>`+
+    `<circle cx="0.4" cy="-0.02" r="0.007" fill="var(--fg)"/>`+
+    `<text x="0.4" y="-0.105" font-family="IBM Plex Mono, monospace" font-size="0.028" fill="var(--muted)" text-anchor="middle">max camber · 0.4c</text>`+
+    `<line x1="0.4" y1="-0.095" x2="0.4" y2="-0.03" stroke="var(--muted)" stroke-width="0.002"/>`+
+    `<text x="1" y="0.05" font-family="IBM Plex Mono, monospace" font-size="0.028" fill="var(--muted)" text-anchor="end">chord c</text>`;
+})();
+
+/* ---------- Copy buttons ---------- */
+document.querySelectorAll('button[data-copy]').forEach(b=>b.addEventListener('click',()=>{
+  const txt=b.dataset.copy, old=b.textContent;
+  const done=()=>{b.textContent='Copied';setTimeout(()=>b.textContent=old,1600)};
+  try{ navigator.clipboard.writeText(txt).then(done,()=>{fallback()}); }catch(e){fallback()}
+  function fallback(){ const r=document.createRange(); const el=document.getElementById('email-val'); if(el){r.selectNodeContents(el);const s=getSelection();s.removeAllRanges();s.addRange(r);} b.textContent='Selected, press Ctrl+C'; setTimeout(()=>b.textContent=old,2200); }
+}));
+
+/* ---------- Form ---------- */
+document.getElementById('contact-form').addEventListener('submit',async e=>{
+  e.preventDefault();
+  const form=e.target, st=document.getElementById('f-status');
+  st.className='status';
+  if(!form.checkValidity()){ st.textContent='Please add your name, a valid email and a message.'; return; }
+  if(WEB3FORMS_KEY.startsWith('YOUR_')){ st.textContent='The form isn’t connected yet. Please email melhem.m.2006@gmail.com directly.'; return; }
+  st.textContent='Sending…';
+  const data=Object.fromEntries(new FormData(form)); data.access_key=WEB3FORMS_KEY; data.from_name='Portfolio website';
+  data.subject=data.subject||('Portfolio message from '+data.name);
+  try{
+    const r=await fetch('https://api.web3forms.com/submit',{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify(data)});
+    const j=await r.json();
+    if(j.success){ st.textContent='Message sent. I’ll reply by email soon.'; st.className='status ok'; form.reset(); }
+    else throw 0;
+  }catch(err){ st.textContent='Couldn’t send right now. Please email melhem.m.2006@gmail.com directly.'; }
+});
+
+/* ---------- 3D model: load the .glb; fall back to an encoded copy where .glb isn't served ---------- */
+(async()=>{
+  const mv=document.getElementById('mv747'); if(!mv) return;
+  try{
+    const r=await fetch('assets/747.glb',{method:'HEAD'});
+    if(r.ok && !(r.headers.get('content-type')||'').includes('text/html')){ mv.src='assets/747.glb'; return; }
+  }catch(e){}
+  try{
+    const b64=await (await fetch('assets/747-model.txt')).text();
+    const bin=Uint8Array.from(atob(b64.trim()),c=>c.charCodeAt(0));
+    mv.src=URL.createObjectURL(new Blob([bin],{type:'model/gltf-binary'}));
+  }catch(e){}
+})();
+document.getElementById('yr').textContent=new Date().getFullYear();
+</script>
+
+</body>
+</html>
